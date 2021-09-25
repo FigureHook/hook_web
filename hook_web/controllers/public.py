@@ -2,10 +2,10 @@ import os
 import urllib.parse
 from base64 import urlsafe_b64encode
 
-from flask import (Blueprint, flash, redirect, render_template, request,
-                   session, url_for)
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_babel import get_locale, gettext
 
+from ..entities.session import DiscordAuthSession
 from ..forms import SubscriptionForm, locale_language_choice
 
 blueprint = Blueprint("public", __name__)
@@ -39,16 +39,18 @@ def home():
 
     if request.method == 'POST':
         if form.validate_on_submit():
-            session['entry_uri'] = request.path
+            state = urlsafe_b64encode(
+                os.urandom(12)).decode('utf-8')
+            auth_session = DiscordAuthSession()
 
-            state = urlsafe_b64encode(os.urandom(12)).decode('utf-8')
-            session['state'] = state
-            discord_auth_uri = concate_discord_auth_uri_with_state(state)
-
-            session['webhook_setting'] = {
+            auth_session.entry_uri = request.path
+            auth_session.state = state
+            auth_session.webhook_setting = {
                 'is_nsfw': form.is_nsfw.data,
                 'lang': form.language.data
             }
+
+            discord_auth_uri = concate_discord_auth_uri_with_state(state)
 
             return redirect(discord_auth_uri)
 
