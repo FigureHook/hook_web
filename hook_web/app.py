@@ -3,7 +3,6 @@ import os
 
 from flask import Flask, request
 
-from .callbacks import set_model_session, unset_model_session
 from .config import config
 from .controllers import auth, public
 from .extension import babel, cors, csrf, db, session
@@ -20,8 +19,7 @@ def create_app(config_name=os.environ.get("FLASK_ENV")):
 
 
 def register_context_callbacks(app: Flask):
-    app.before_request(set_model_session)
-    app.teardown_appcontext(unset_model_session)
+    pass
 
 
 def register_extensions(app: Flask):
