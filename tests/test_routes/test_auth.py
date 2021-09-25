@@ -26,12 +26,13 @@ class FailedMockAuthReponse(MockAuthReponse):
 class TestWebhookAuth:
 
     def test_successful_webhook_auth(self, client, mocker: MockerFixture):
-        from hook_web.libs.discord_api import DiscordApi
-        mocker.patch.object(DiscordApi, 'exchange_token',
-                            return_value=MockAuthReponse())
+        mocker.patch(
+            'hook_web.controllers.auth.DiscordApi.exchange_token',
+            return_value=MockAuthReponse()
+        )
         mocker.patch('hook_web.controllers.auth.save_webhook_info',
                      return_value=True)
-        mocker.patch('hook_web.controllers.auth.check_state',
+        mocker.patch('hook_web.controllers.auth.DiscordAuthSession.is_state_valid',
                      return_value=True)
         hook_sending = mocker.patch(
             'hook_web.controllers.auth.send_notification_hook')
@@ -52,15 +53,21 @@ class TestWebhookAuth:
         assert hook_sending.call_count == 1
 
     def test_faile_webhook_auth(self, client, mocker: MockerFixture):
-        from hook_web.libs.discord_api import DiscordApi
-        mocker.patch.object(DiscordApi, 'exchange_token',
-                            return_value=FailedMockAuthReponse())
-        saving_webhook = mocker.patch('hook_web.controllers.auth.save_webhook_info',
-                                      return_value=True)
-        mocker.patch('hook_web.controllers.auth.check_state',
-                     return_value=True)
+        mocker.patch(
+            'hook_web.controllers.auth.DiscordApi.exchange_token',
+            return_value=FailedMockAuthReponse()
+        )
+        mocker.patch(
+            'hook_web.controllers.auth.DiscordAuthSession.is_state_valid',
+            return_value=True
+        )
+        saving_webhook = mocker.patch(
+            'hook_web.controllers.auth.save_webhook_info',
+            return_value=True
+        )
         hook_sending = mocker.patch(
-            'hook_web.controllers.auth.send_notification_hook')
+            'hook_web.controllers.auth.send_notification_hook'
+        )
 
         with client.session_transaction() as session:
             session['webhook_setting'] = {'lang': 'zh-TW'}

@@ -38,3 +38,16 @@ class TestDiscordAuthSession:
         assert auth_session.state
         assert auth_session.entry_uri
         assert auth_session.webhook_setting
+
+    def test_check_state_method(self, client):
+        with client.session_transaction() as session:
+            session['state'] = 'kappa'
+
+        client.get("/")
+        auth_session = DiscordAuthSession()
+
+        state_is_valid = auth_session.is_state_valid('keepo')
+        assert state_is_valid
+
+        state_not_valid = not auth_session.is_state_valid('kappa')
+        assert state_not_valid

@@ -29,7 +29,7 @@ def webhook():
             token_exchange_code, redirect_uri
         )
 
-        if token_response.status_code == 200 and check_state(state):
+        if token_response.status_code == 200 and auth_session.is_state_valid(state):
             webhook_response = token_response.json()
             webhook_channel_id = webhook_response['webhook']['channel_id']
             webhook_id = webhook_response['webhook']["id"]
@@ -66,7 +66,3 @@ def save_webhook_info(channel_id, _id, token, **kwargs):
         the_hook = Webhook.create(
             channel_id=channel_id, id=_id, token=token, **kwargs)
     the_hook.session.commit()
-
-
-def check_state(state):
-    return session.get('state') == state
