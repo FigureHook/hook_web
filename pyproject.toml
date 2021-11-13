@@ -16,10 +16,10 @@ WTForms = "^2.3.3"
 Authlib = "^0.15.4"
 loginpass = "^0.5"
 gunicorn = {extras = ["gevent"], version = "^20.1.0"}
-figure-hook = {git = "https://github.com/FigureHook/figure_hook.git", branch = "main"}
 Flask-Babel = "^2.0.0"
 redis = "^3.5.3"
 python-dotenv = "^0.19.0"
+hook-tasks = {git = "https://github.com/FigureHook/hook_tasks", rev = "main"}
 
 [tool.poetry.dev-dependencies]
 coverage = "^5.5"
