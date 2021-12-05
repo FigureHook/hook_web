@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ! python cmd.py checkdb; then
+if ! python _cmd.py checkdb; then
     echo "Can't get connection with database."
     exit 1
 fi
