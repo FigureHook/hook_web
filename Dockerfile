@@ -13,6 +13,8 @@ WORKDIR /workspace
 COPY poetry.lock .
 COPY pyproject.toml .
 COPY hook_web hook_web/
+COPY shell_scripts shell_scripts/
+COPY _cmd.py .
 
 RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi \
