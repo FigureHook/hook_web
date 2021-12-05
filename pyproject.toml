@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hook_web"
-version = "0.1.0"
+version = "0.0.1"
 description = ""
 authors = ["Elton Chou <plscd748@gmail.com>"]
 
@@ -19,8 +19,9 @@ gunicorn = {extras = ["gevent"], version = "^20.1.0"}
 Flask-Babel = "^2.0.0"
 redis = "^3.5.3"
 python-dotenv = "^0.19.0"
-hook-tasks = {git = "https://github.com/FigureHook/hook_tasks", rev = "main"}
 click = "^8.0.3"
+hook-tasks = {git = "https://github.com/FigureHook/hook_tasks", tag = "v0.0.1"}
+figure-hook = {git = "https://github.com/FigureHook/figure_hook", rev = "v0.0.1"}
 
 [tool.poetry.dev-dependencies]
 coverage = "^5.5"
