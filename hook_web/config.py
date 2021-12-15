@@ -2,7 +2,7 @@ import os
 from base64 import b64encode
 from os import urandom
 
-import redis
+from redis import Redis
 
 
 class Config(object):
@@ -12,7 +12,11 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SESSION_TYPE = 'redis'
     SESSION_USE_SIGNER = True
-    SESSION_REDIS = redis.from_url(f"redis://{os.environ.get('REDIS_URL')}")
+    SESSION_REDIS = Redis(
+        host=os.environ.get('REDIS_HOST', "127.0.0.1"),
+        port=int(os.environ.get('REDIS_PORT', "6379")),
+        password=os.environ.get('REDIS_PASSWORD')
+    )
 
     @property
     def SQLALCHEMY_DATABASE_URI(self):
