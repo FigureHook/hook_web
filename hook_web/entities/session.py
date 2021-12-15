@@ -32,4 +32,4 @@ class DiscordAuthSession:
         self._session.setdefault('webhook_setting', setting)
 
     def is_state_valid(self, outside_state: str) -> bool:
-        return self.state != outside_state
+        return self.state == outside_state

@@ -46,8 +46,8 @@ class TestDiscordAuthSession:
         client.get("/")
         auth_session = DiscordAuthSession()
 
-        state_is_valid = auth_session.is_state_valid('keepo')
+        state_is_valid = auth_session.is_state_valid('kappa')
         assert state_is_valid
 
-        state_not_valid = not auth_session.is_state_valid('kappa')
+        state_not_valid = not auth_session.is_state_valid('keepo')
         assert state_not_valid
