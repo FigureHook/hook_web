@@ -60,7 +60,6 @@ def webhook():
             webhook_id = webhook_response['webhook']["id"]
             webhook_token = webhook_response['webhook']['token']
 
-            # TODO: if webhook_setting was lost, deal with it
             webhook_setting = auth_session.webhook_setting
             if webhook_setting:
                 the_hook = save_webhook_info(
