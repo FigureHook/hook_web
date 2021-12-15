@@ -27,6 +27,7 @@ def register_context_callbacks(app: Flask):
     @app.teardown_request
     def unset_db_session(response_or_exc):
         Model.set_session(None)
+        return response_or_exc
 
 
 def register_extensions(app: Flask):
