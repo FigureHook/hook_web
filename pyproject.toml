@@ -20,8 +20,8 @@ Flask-Babel = "^2.0.0"
 redis = "^3.5.3"
 python-dotenv = "^0.19.0"
 click = "^8.0.3"
-hook-tasks = {git = "https://github.com/FigureHook/hook_tasks", tag = "v0.0.1"}
-figure-hook = {git = "https://github.com/FigureHook/figure_hook", rev = "v0.0.1"}
+hook-tasks = {git = "https://github.com/FigureHook/hook_tasks", tag = "v0.0.3"}
+figure-hook = {git = "https://github.com/FigureHook/figure_hook", rev = "v0.0.2"}
 
 [tool.poetry.dev-dependencies]
 coverage = "^5.5"
