@@ -30,8 +30,6 @@ class TestWebhookAuth:
             'hook_web.controllers.auth.DiscordApi.exchange_token',
             return_value=MockAuthReponse()
         )
-        mocker.patch('hook_web.controllers.auth.save_webhook_info',
-                     return_value=True)
         mocker.patch('hook_web.controllers.auth.DiscordAuthSession.is_state_valid',
                      return_value=True)
         hook_sending = mocker.patch(
@@ -52,17 +50,13 @@ class TestWebhookAuth:
         assert b'message is-success' in r.data
         assert hook_sending.call_count == 1
 
-    def test_faile_webhook_auth(self, client, mocker: MockerFixture):
+    def test_faild_webhook_auth(self, client, mocker: MockerFixture):
         mocker.patch(
             'hook_web.controllers.auth.DiscordApi.exchange_token',
             return_value=FailedMockAuthReponse()
         )
         mocker.patch(
             'hook_web.controllers.auth.DiscordAuthSession.is_state_valid',
-            return_value=True
-        )
-        saving_webhook = mocker.patch(
-            'hook_web.controllers.auth.save_webhook_info',
             return_value=True
         )
         hook_sending = mocker.patch(
