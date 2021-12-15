@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
+from figure_hook.Models.base import Model
 from flask import Flask, request
 
 from .config import config
@@ -19,7 +20,13 @@ def create_app(config_name=os.environ.get("FLASK_ENV")):
 
 
 def register_context_callbacks(app: Flask):
-    pass
+    @app.before_request
+    def set_db_session():
+        Model.set_session(db.session)
+
+    @app.teardown_request
+    def unset_db_session(response_or_exc):
+        Model.set_session(None)
 
 
 def register_extensions(app: Flask):
