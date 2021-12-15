@@ -1,5 +1,6 @@
 import pytest
 
+
 @pytest.fixture(scope='session')
 def client():
     from figure_hook.database import PostgreSQLDB

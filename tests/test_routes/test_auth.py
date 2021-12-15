@@ -61,6 +61,8 @@ class TestWebhookAuth:
             'hook_web.controllers.auth.send_notification_hook')
 
         with client.session_transaction() as session:
+            if 'webhook_setting' in session:
+                del session['webhook_setting']
             session['entry_uri'] = '/'
 
         r = client.get(
