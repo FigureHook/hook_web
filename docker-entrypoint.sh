@@ -16,7 +16,7 @@ check_db() {
 
 
 check_redis() {
-    if ! hookweb check db; then
+    if ! hookweb check redis; then
         echo "Can't get connection with redis."
     exit 1
     fi
