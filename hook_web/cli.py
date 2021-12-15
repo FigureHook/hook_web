@@ -20,6 +20,12 @@ def babel():
     pass
 
 
+@main.group()
+def check():
+    """connection checking tool"""
+    pass
+
+
 @babel.command('compile')
 def babel_compile():
     """compile translations."""
@@ -57,8 +63,8 @@ def babel_extract():
     )
 
 
-@main.command()
-def checkdb():
+@check.command('db')
+def check_db():
     db = PostgreSQLDB()
     db_exist = False
     try_count = 0
@@ -72,6 +78,8 @@ def checkdb():
             conn.close()
             db_exist = True
             click.echo("Successfully build connection with database.")
+        except KeyboardInterrupt:
+            sys.exit(0)
         except:
             click.echo(
                 f"Failed to build connection with database. Retry after {interval} seconds. ({try_count + 1}/{max_retry_times})"
@@ -81,6 +89,34 @@ def checkdb():
             try_count += 1
 
     exit_code = 0 if db_exist else 1
+    sys.exit(exit_code)
+
+
+@check.command('redis')
+def check_redis():
+    from .config import Config
+    redis = Config.SESSION_REDIS
+
+    is_exist = False
+    try_count = 0
+    max_retry_times = 10
+
+    click.echo("Building redis connection...")
+    while not is_exist and try_count < max_retry_times:
+        try:
+            redis.ping()
+            is_exist = True
+            click.echo("Successfully build connection with redis.")
+        except KeyboardInterrupt:
+            raise click.exceptions.Abort
+        except:
+            click.echo(
+                f"Failed to build connection with database. Retry... ({try_count + 1}/{max_retry_times})"
+            )
+
+        try_count += 1
+
+    exit_code = 0 if is_exist else 1
     sys.exit(exit_code)
 
 
