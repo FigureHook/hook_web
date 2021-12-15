@@ -69,7 +69,7 @@ def webhook():
                     **webhook_setting
                 )
 
-                logger.info(f"${the_hook.id} created.")
+                logger.info(f"{the_hook.id} created.")
 
                 with force_locale(Locale.parse(webhook_setting.get('lang'), sep='-')):
                     welcome_msg = gettext("FigureHook hooked on this channel.")
