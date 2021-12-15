@@ -1,5 +1,4 @@
 from flask import url_for
-from pytest_mock import MockerFixture
 
 
 def subscribe(client, is_nsfw: bool, language: str):
