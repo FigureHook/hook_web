@@ -31,6 +31,9 @@ pytest-mock = "^3.6.1"
 flake8 = "^3.9.2"
 autopep8 = "^1.5.7"
 
+[tool.poetry.scripts]
+hookweb = "hook_web.cli:main"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
