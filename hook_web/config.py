@@ -49,7 +49,7 @@ class DevelopmentConfig(Config):
 
 
 class TestingConfig(Config):
-    SERVER_NAME = "hook-test.local"
+    SERVER_NAME = "localhost"
     WTF_CSRF_ENABLED = False
     SECRET_KEY = "test"
 
