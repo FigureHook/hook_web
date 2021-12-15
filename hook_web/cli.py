@@ -16,14 +16,30 @@ def main():
 
 @main.group()
 def babel():
-    """pybabel command"""
+    """pybabel command."""
     pass
 
 
 @main.group()
 def check():
-    """connection checking tool"""
+    """connection checking tool."""
     pass
+
+
+@main.command('initdb')
+def init_db():
+    "initialize database."
+    from figure_hook.Models.base import Model
+    pgsql = PostgreSQLDB()
+    Model.metadata.create_all(pgsql.engine)
+
+
+@main.command('dropdb')
+def drop_db():
+    "drop database."
+    from figure_hook.Models.base import Model
+    pgsql = PostgreSQLDB()
+    Model.metadata.drop_all(pgsql.engine)
 
 
 @babel.command('compile')
@@ -126,6 +142,7 @@ def check_redis():
 @click.option('--cert', 'cert_path', help="SSL cert file")
 @click.option('--key', 'key_path', help="SSL key file")
 def run(host, port, cert_path, key_path):
+    """run development server."""
     from .app import create_app
     app = create_app()
 
