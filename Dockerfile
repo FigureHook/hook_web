@@ -13,11 +13,12 @@ WORKDIR /workspace
 COPY poetry.lock .
 COPY pyproject.toml .
 COPY hook_web hook_web/
-COPY shell_scripts shell_scripts/
-COPY _cmd.py .
+COPY docker-entrypoint.sh .
 
 RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi \
-    && pybabel compile -d hook_web/translations/
+    && pybabel compile -d hook_web/translations/ \
+    && chmod +x docker-entrypoint.sh
 
-CMD /bin/bash ./shell_scripts/service_start.sh
+ENTRYPOINT [ "./docker-entrypoint.sh" ]
+CMD [ "start" ]
