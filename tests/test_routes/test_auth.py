@@ -77,4 +77,3 @@ class TestWebhookAuth:
         assert r.status_code == 200
         assert b'message is-warning' in r.data
         assert not hook_sending.called
-        assert not saving_webhook.called
